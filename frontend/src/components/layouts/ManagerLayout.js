@@ -19,7 +19,8 @@ const ManagerLayout = ({ children }) => {
   const navItems = [
     { path: '/manager/dashboard', icon: 'dashboard', label: 'Dashboard' },
     { path: '/manager/requests', icon: 'pending_actions', label: 'Pending Requests' },
-    { path: '/manager/team', icon: 'groups', label: 'Team History' }
+    { path: '/manager/team', icon: 'groups', label: 'Team History' },
+    { path: '/manager/employees', icon: 'badge', label: 'Employees' }
   ];
 
   return (

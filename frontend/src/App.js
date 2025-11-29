@@ -9,6 +9,7 @@ import Profile from './pages/employee/Profile';
 import ManagerDashboard from './pages/manager/Dashboard';
 import PendingRequests from './pages/manager/PendingRequests';
 import TeamHistory from './pages/manager/TeamHistory';
+import Employees from './pages/manager/Employees';
 import './App.css';
 
 function App() {
@@ -74,6 +75,14 @@ function App() {
             element={
               <ProtectedRoute requireRole="manager">
                 <TeamHistory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/manager/employees"
+            element={
+              <ProtectedRoute requireRole="manager">
+                <Employees />
               </ProtectedRoute>
             }
           />
