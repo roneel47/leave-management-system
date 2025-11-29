@@ -2,21 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout as logoutAction } from '../../store/authSlice';
+import { logout as logoutAction, setCredentials } from '../../store/authSlice';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
 const EmployeeDashboard = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetchUserData();
     fetchLeaveRequests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const fetchUserData = async () => {
+    try {
+      // Refresh user data to get updated leave balance
+      const res = await axios.get(`${API_URL}/api/users/${user._id}`);
+      dispatch(setCredentials({ user: res.data, token }));
+    } catch (err) {
+      console.error('Error fetching user data:', err);
+    }
+  };
 
   const fetchLeaveRequests = async () => {
     try {
@@ -46,7 +58,7 @@ const EmployeeDashboard = () => {
   };
 
   const leaveBalance = user?.leaveBalance || { vacation: 0, sick: 0, casual: 0 };
-  const totalVacation = 20;
+  const totalVacation = 5;
   const totalSick = 10;
   const totalCasual = 5;
 
