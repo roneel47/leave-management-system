@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Leave Requests</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: "#4361EE",
+              light: "#5E77F3",
+            },
+            "background-light": "#f6f6f8",
+            "background-dark": "#0B1120",
+            "surface-dark": "#131B2E",
+            "border-dark": "#253049",
+            "text-light": "#E0E6F7",
+            "text-muted": "#818DA9",
+            "accent-blue": "#3A86FF",
+            "accent-green": "#34D399",
+            "accent-yellow": "#FBBF24",
+            "accent-red": "#F87171",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-approved {
+      background-color: rgba(52, 211, 153, 0.1);
+      color: #34D399;
+    }
+    .status-pending {
+      background-color: rgba(251, 191, 36, 0.1);
+      color: #FBBF24;
+    }
+    .status-rejected {
+      background-color: rgba(248, 113, 113, 0.1);
+      color: #F87171;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+    }
+    .dot-approved {
+      background-color: #34D399;
+    }
+    .dot-pending {
+      background-color: #FBBF24;
+    }
+    .dot-rejected {
+      background-color: #F87171;
+    }
+    body {
+      background-color: #0B1120;
+    }
+    .form-checkbox:checked,
+    .form-radio:checked {
+      background-color: #4361EE;
+      border-color: #4361EE;
+    }
+    tr,
+    .stat-card,
+    button,
+    a {
+      transition: all 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-dark text-text-light">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<aside class="fixed top-0 left-0 h-full w-64 bg-surface-dark border-r border-border-dark flex flex-col p-6">
+<div class="flex items-center gap-4 mb-8">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCK1MqG11tfb14Cr_wRSeuMwqZuG5cinrLMEp7LXB0oLNUw51cf3MsK56uxIkHy15X8WDk0QAesYFAvMeT1OejHuRERmgV6Vw_Js5eHTPe2_ivQ0znQYYjMH8zMn14uRCBvnU3Ll02UyGEKZvPuowvGUq9GW-p-pvxPvBzlPiZeosGp_GL0VbgFQAbQ-R-OJGiX-ez-B2K5YYkn-YVTZ_Tg-bCav0uAPizCGT7IspgSkv2UCENajLGU6niVmgqc8WxQ5Dctr9ODhRA");'></div>
+<div>
+<p class="text-white text-base font-medium">John Doe</p>
+<p class="text-text-muted text-sm">Software Engineer</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">dashboard</span><span class="text-sm font-medium">Dashboard</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-primary bg-background-dark" href="#"><span class="material-symbols-outlined">calendar_month</span><span class="text-sm font-medium">My Leave</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="text-sm font-medium">Team Schedule</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">bar_chart</span><span class="text-sm font-medium">Reports</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">settings</span><span class="text-sm font-medium">Settings</span></a>
+</nav>
+<div class="flex flex-col gap-2">
+<button class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white"><span class="material-symbols-outlined">help</span><span class="text-sm font-medium">Help</span></button>
+<button class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white"><span class="material-symbols-outlined">logout</span><span class="text-sm font-medium">Logout</span></button>
+</div>
+</aside>
+<main class="layout-container flex h-full grow flex-col p-6 lg:p-10 ml-64">
+<div class="flex flex-col gap-6">
+<div class="flex flex-wrap justify-between gap-4 items-center mb-6">
+<div class="flex flex-col gap-1">
+<p class="text-white text-3xl font-black leading-tight tracking-[-0.033em]">My Leave Requests</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] gap-2 hover:bg-primary-light transform hover:scale-105"><span class="material-symbols-outlined text-base">add</span><span class="truncate">Request Leave</span></button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap items-center gap-4 py-3">
+<label class="flex flex-col min-w-40 h-10 w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-text-muted flex border-none bg-surface-dark border border-border-dark items-center justify-center pl-4 rounded-l-lg border-r-0"><span class="material-symbols-outlined text-2xl">search</span></div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light focus:outline-0 focus:ring-2 focus:ring-primary border-border-dark focus:border-primary bg-surface-dark h-full placeholder:text-text-muted px-4 border-l-0 text-base font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-dark text-text-muted hover:bg-border-dark hover:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"><span class="material-symbols-outlined">filter_list</span></button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-dark text-text-muted hover:bg-border-dark hover:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"><span class="material-symbols-outlined">download</span></button>
+</div>
+<div class="flex overflow-hidden rounded-xl border border-border-dark bg-surface-dark">
+<table class="w-full">
+<thead>
+<tr class="border-b border-border-dark bg-surface-dark/50">
+<th class="px-6 py-4 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Leave Type</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-muted uppercase tracking-wider">From</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-muted uppercase tracking-wider">To</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Days</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-right text-xs font-medium text-text-muted uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<tr class="hover:bg-background-dark">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white">Vacation</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Oct 28, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Nov 01, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">5</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-pending">
+<div class="dot dot-pending"></div>Pending
+                    </span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="text-accent-red text-sm font-medium hover:text-red-500">Cancel</button></td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white">Sick Leave</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Sep 15, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Sep 15, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">1</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-approved">
+<div class="dot dot-approved"></div>Approved
+                    </span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="text-accent-blue text-sm font-medium hover:text-blue-500">View</button></td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white">Personal Day</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Aug 02, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Aug 02, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">1</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-approved">
+<div class="dot dot-approved"></div>Approved
+                    </span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="text-accent-blue text-sm font-medium hover:text-blue-500">View</button></td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white">Vacation</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Jul 10, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">Jul 12, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-text-muted">3</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-rejected">
+<div class="dot dot-rejected"></div>Rejected
+                    </span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="text-accent-blue text-sm font-medium hover:text-blue-500">View</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between py-3">
+<span class="text-sm text-text-muted">Showing 1 to 4 of 10 results</span>
+<div class="inline-flex gap-1">
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-border-dark text-sm font-medium hover:bg-border-dark text-text-muted hover:text-text-light"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-primary text-sm font-medium bg-primary text-white">1</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-border-dark text-sm font-medium hover:bg-border-dark text-text-muted hover:text-text-light">2</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-border-dark text-sm font-medium hover:bg-border-dark text-text-muted hover:text-text-light">3</button>
+<span class="inline-flex items-center justify-center h-8 w-8 text-text-muted">...</span>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-border-dark text-sm font-medium hover:bg-border-dark text-text-muted hover:text-text-light">10</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-border-dark text-sm font-medium hover:bg-border-dark text-text-muted hover:text-text-light"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employee Login/Register</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#4361EE",
+                            light: "#5E77F3",
+                        },
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0B1120",
+                        "surface-dark": "#131B2E",
+                        "border-dark": "#253049",
+                        "text-light": "#E0E6F7",
+                        "text-muted": "#818DA9",
+                        "accent-blue": "#3A86FF",
+                        "accent-green": "#34D399",
+                        "accent-yellow": "#FBBF24",
+                        "accent-red": "#F87171",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .status-approved {
+            background-color: rgba(52, 211, 153, 0.1);
+            color: #34D399;
+        }
+        .status-pending {
+            background-color: rgba(251, 191, 36, 0.1);
+            color: #FBBF24;
+        }
+        .status-rejected {
+            background-color: rgba(248, 113, 113, 0.1);
+            color: #F87171;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+        }
+        .dot-approved {
+            background-color: #34D399;
+        }
+        .dot-pending {
+            background-color: #FBBF24;
+        }
+        .dot-rejected {
+            background-color: #F87171;
+        }
+        body {
+            background-color: #0B1120;
+        }
+        .form-checkbox:checked,
+        .form-radio:checked {
+            background-color: #4361EE;
+            border-color: #4361EE;
+        }
+        tr,
+        .stat-card,
+        button,
+        a {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-dark text-text-light">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-dark px-10 py-3 bg-surface-dark/50 backdrop-blur-sm sticky top-0 z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 20.2188C2 20.2188 7.04812 17.2372 12 19.7844C17.5332 22.6314 22 20.1039 22 20.1039V4.50566C22 4.50566 17.534 6.82885 12.0016 3.98406C7.04856 1.43787 2 4.63546 2 4.63546V20.2188Z"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Leave Management</h2>
+</div>
+<div class="flex flex-1 justify-center gap-8">
+<div class="flex items-center gap-2 p-1 bg-background-dark rounded-full border border-border-dark"><a class="text-white bg-primary text-sm font-medium leading-normal px-4 py-1.5 rounded-full" href="#">Login</a><a class="text-text-muted text-sm font-medium leading-normal hover:text-white px-4 py-1.5 rounded-full transition-colors" href="#">Register</a></div>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLa3Tzklpx3a207lyn4LY_1NKRjt5oOeMa-nod8hwCNC08ZjmOsjlDWADjI7F9SMUECaKW42EHdEBgBEoYtwYfjJvQ5j5A8AcxuxPKdGfp81xVe8avVFhrCyIIv9lYuCOKUfehRm9cRtkORouPXd5gnL4I9vNsTqafoiMOvLNxyQkfdEe2CUMk702Rr6H9S_Hnkcu-puZHnlYHpmv3ol3zp3yFLnQYhwSc18e77xmnMuBTfIVxEZj7SZkaMI5A1AeJhHh-Is01vp4");'></div>
+</div>
+</header>
+<main class="layout-container flex h-full grow flex-col p-6 lg:p-10">
+<div class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
+<div class="bg-surface-dark border border-border-dark p-8 rounded-xl shadow-lg w-full max-w-md">
+<h2 class="text-white text-3xl font-bold mb-6 text-center">Welcome Back</h2>
+<p class="text-text-muted text-center mb-6">Login to access your leave management dashboard.</p>
+<div class="flex flex-col gap-4">
+<label class="flex flex-col min-w-40 w-full"><span class="text-text-muted text-sm font-medium leading-normal mb-2">Email Address</span>
+<div class="flex w-full flex-1 items-stretch rounded-lg h-10"><input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light focus:outline-0 focus:ring-2 focus:ring-primary border-border-dark focus:border-primary bg-background-dark h-full placeholder:text-text-muted px-4 text-base font-normal leading-normal" placeholder="Enter your email address" type="email" value=""/></div>
+</label>
+<label class="flex flex-col min-w-40 w-full"><span class="text-text-muted text-sm font-medium leading-normal mb-2">Password</span>
+<div class="flex w-full flex-1 items-stretch rounded-lg h-10"><input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light focus:outline-0 focus:ring-2 focus:ring-primary border-border-dark focus:border-primary bg-background-dark h-full placeholder:text-text-muted px-4 text-base font-normal leading-normal" placeholder="Enter your password" type="password" value=""/></div>
+</label><a class="text-primary text-sm font-medium text-right hover:text-primary-light" href="#">Forgot Password?</a>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary-light transform hover:scale-105">Login</button>
+<div class="flex items-center gap-4 my-2">
+<div class="flex-1 border-b border-border-dark"></div><span class="text-text-muted text-sm">OR</span>
+<div class="flex-1 border-b border-border-dark"></div>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface-dark text-text-light border border-border-dark text-sm font-bold leading-normal tracking-[0.015em] gap-2 hover:bg-border-dark hover:border-text-muted"><img alt="Google logo" class="h-5 w-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsZVCg8O7Gath3jhPNlFXBmewwLq7CT_dgZogN4wucdKy0ji462_UwbAOx3vbLu1KX9LAs1kyT-JeEvPPwmwchZaObdHoOcHTJl0_9kMEy5GoMSpZoq7-2PGqCuwBZXXL6gYKaSTZJekb0rBhaP4dfY5nnluYtFBltPfUnVsEe6F1LdiQCmPzRAe8wsMup9zq5HiqMzyPoTZ7pkouZaHnquyGvg6Hk4Xr7NiSdm78V4XwGp_YFdQ2_erjL7dyAVX2S4JCE7enSOHU"/><span class="truncate">Sign in with Google</span></button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface-dark text-text-light border border-border-dark text-sm font-bold leading-normal tracking-[0.015em] gap-2 hover:bg-border-dark hover:border-text-muted"><img alt="Microsoft logo" class="h-5 w-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_SUo8lHMPCXgS9Np53Y3FURFZQZMoSCcDIk2_DultR4VeeOfMGJY5k4K_r-V7g1POB5a8tparuqf5TkR7G8c0gZ6JfaqKG_3qmGsLmefOqEJFdPkyuobw5KgJd2Yw0nFYuAogHpXVFeZ8DAbdQXeow3iexHKczr6CcMb6d3RNy4r6Q2LVc9srfxBrryJtFaRxlkRHJTOda25WIV1-Qjq3gygiyIOECI5ybHxS9EkFncj9C5YK9pA3Dkwv54RC-bmVNO7ex_9TiGY"/><span class="truncate">Sign in with Microsoft</span></button>
+<p class="text-text-muted text-sm text-center mt-4">Don't have an account? <a class="text-primary hover:text-primary-light" href="#">Register here</a></p>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

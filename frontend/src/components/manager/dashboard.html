@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manager Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex h-screen w-full">
+<!-- SideNavBar -->
+<aside class="flex w-64 flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-4">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">donut_large</span>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">Zenith HR</h1>
+</div>
+<div class="flex flex-col justify-between h-full">
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium leading-normal">My Team</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Reports</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-sm font-medium leading-normal">Calendar</p>
+</a>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 mb-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Olivia Chen profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyfx5TYGj_FZOVJYTOW0gqNjFKQgYKx6Rmdrey46jr95cWRvu5EMUOaUvxdw86XIndLAlFbMElakGw0hc3YYCCGSX4w5D0uQF3hoFz3r2oXGxXM4uhbjsMT9SHeX61AS1970YN075vUp7ss1npicvGwfUTeZR8awEJoEIpW7tYDkWJ4JCPcUdyxX2WGSTJvjwsT0v595Fmpyac65OWWhmf1YBeM4rJABIHpIjtBFrOdmVECNvvdDPFlrYU0YpgkI74A2stOXdo2GM");'></div>
+<div class="flex flex-col">
+<h1 class="text-gray-900 dark:text-white text-sm font-medium leading-normal">Olivia Chen</h1>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal">Engineering Manager</p>
+</div>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Log Out</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto">
+<div class="p-8">
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-4 items-center mb-8">
+<div class="flex flex-col gap-1">
+<p class="text-gray-900 dark:text-white text-3xl font-bold leading-tight tracking-tight">Manager Dashboard</p>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Oversee your team's leave requests and schedules.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] gap-2">
+<span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+<span class="truncate">Request Leave</span>
+</button>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">Pending Requests</p>
+<p class="text-gray-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">5</p>
+<p class="text-green-600 dark:text-green-400 text-xs font-medium leading-normal">+2 from yesterday</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">On Leave Today</p>
+<p class="text-gray-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">2</p>
+<p class="text-red-600 dark:text-red-400 text-xs font-medium leading-normal">-1 from yesterday</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">Upcoming (7 Days)</p>
+<p class="text-gray-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">4</p>
+<p class="text-green-600 dark:text-green-400 text-xs font-medium leading-normal">+5 from last week</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">Team Availability</p>
+<p class="text-gray-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">92%</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium leading-normal">Stable</p>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Pending Requests (Main Column) -->
+<div class="xl:col-span-2">
+<!-- SectionHeader -->
+<h2 class="text-gray-900 dark:text-white text-xl font-bold leading-tight tracking-tight mb-4">Action Required: Pending Requests</h2>
+<!-- Chips -->
+<div class="flex gap-2 pb-4 overflow-x-auto">
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/10 text-primary dark:bg-primary/20 px-3">
+<p class="text-sm font-medium leading-normal">All</p>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-3">
+<p class="text-sm font-medium leading-normal">Annual Leave</p>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-3">
+<p class="text-sm font-medium leading-normal">Sick Leave</p>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-3">
+<p class="text-sm font-medium leading-normal">Unpaid</p>
+</button>
+</div>
+<!-- Requests Table -->
+<div class="bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-gray-50 dark:bg-gray-800 text-xs text-gray-500 dark:text-gray-400 uppercase">
+<tr>
+<th class="px-6 py-3" scope="col">Employee</th>
+<th class="px-6 py-3" scope="col">Leave Type</th>
+<th class="px-6 py-3" scope="col">Dates</th>
+<th class="px-6 py-3 text-center" scope="col">Days</th>
+<th class="px-6 py-3 text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b dark:border-gray-700">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Liam Johnson profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0FA_Bd6kjjsOXkaa5KGKuAYZT4SpcdAQDATFVZiqH2Ecba2QazBk24nc6gKLKCSIZZgVH9xhVB9Su5XDPXCsz9fcIs8YC25PM7_rvixQI4Nwd5FKSJ1W2oO3J04Yn2Hfq-mcvwx4zOkX_xLm7x4cfDf4VcoJqNNhlO3zHX05vhIse7Y0RKSaMiUZ_PLcSQW_vC-3PIn5qhkyhsHruacTxtr6OnIPmUvi4Y_etxBO3t4onYiyt1GiowYMLfvFVWJsOLo42iWaIHYg");'></div>
+                                                Liam Johnson
+                                            </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Annual Leave</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Mar 15 - Mar 18, 2024</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 text-center">4</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200">Reject</button>
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 hover:bg-green-200">Approve</button>
+</td>
+</tr>
+<tr class="border-b dark:border-gray-700">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Noah Taylor profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCfL7FPPhXMyDdfCuLt61E5p408gqEzsa7WrsfOpgT55at2-RppPtWhsD9hy_v7jzOz2IRQ4Ld2-pgCUIDiIkqt6tEIZtrpbS90cg5V51VZT0sTrc1Wr8Rj2CpI7h8rCfe8fM2ZJXFt6DKQ_IZ7r7c6n8OOW5TSmqBm9fJxW9t7vDlde08mC8GfnD3wWsDFEMK6WzJWlpmpHB2LBJiDnWgHwQia1NMjDmj1trHE1hVnKwo5NgK3hE_ii1xtyqIQPOqA4IvBW5csQPk");'></div>
+                                                Noah Taylor
+                                            </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Sick Leave</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Mar 12, 2024</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 text-center">1</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200">Reject</button>
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 hover:bg-green-200">Approve</button>
+</td>
+</tr>
+<tr class="border-b dark:border-gray-700">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Sophia Davis profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDF9wvL-VkhNiepMyMOy_-X5FX3dGHnhnNAqTdyes8AoVgNAS0k5gS1CeXMF6z_h0XXGNdP0n0O2x4J2PCTiRggKV4ZciKLquu9k8Hs-Z8flBbp6mnV5y0XoZX6sFF-7j5ucE8xrTQxsV9GuL-P4AV-vhR-TFP6MjLGDr-83utkUSV9tYnKuJzJGTcL1-ScC6tHT6A1kWKjTmNKpw6kA-BSCeEuxeN0wR0c6ssMJZT_f5hmiEVcq84QxMvTNbs6d5m7LtnsvzvK4qE");'></div>
+                                                Sophia Davis
+                                            </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Annual Leave</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Mar 25 - Apr 2, 2024</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 text-center">7</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200">Reject</button>
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 hover:bg-green-200">Approve</button>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Emma Martinez profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCi6ZcusIKLsS_knCoqCOvdPatmO2Uxzt9AhKvWm_BHm4PqaYIta7be8nJgjrExBlcr-whZtLkdfzw8ohQXyXjqHJ8rMOTOSa8-waJpRsL0UL9V4M2fryWcbhClRnSWJ9fj0JdwKjWelhOD1KX8xXoUNibJkRcaO2uh9tlWfS5G-a0bS_XcqXMOJjbc2wCv0I14pttmqL034-c0F9L3n4L_0FuJY8cvKx3-iuOg6KP4F5WBUme2wsfG17jJo8ME-biul_nR_tETqEI");'></div>
+                                                Emma Martinez
+                                            </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Unpaid Leave</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300">Mar 20, 2024</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 text-center">1</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200">Reject</button>
+<button class="h-8 px-3 text-xs font-bold rounded-lg bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 hover:bg-green-200">Approve</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Side Column -->
+<div class="flex flex-col gap-8">
+<!-- Team Calendar -->
+<div>
+<h2 class="text-gray-900 dark:text-white text-xl font-bold leading-tight tracking-tight mb-4">Team Leave Calendar</h2>
+<div class="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+<div class="flex items-center justify-between mb-4">
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-gray-600 dark:text-gray-400">chevron_left</span></button>
+<p class="font-semibold text-gray-800 dark:text-gray-200">March 2024</p>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-gray-600 dark:text-gray-400">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-xs text-gray-500 dark:text-gray-400">
+<div class="pb-2">Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-sm">
+<!-- Empty cells for previous month -->
+<div class="text-gray-400 dark:text-gray-600 py-1">25</div><div class="text-gray-400 dark:text-gray-600 py-1">26</div><div class="text-gray-400 dark:text-gray-600 py-1">27</div><div class="text-gray-400 dark:text-gray-600 py-1">28</div><div class="text-gray-400 dark:text-gray-600 py-1">29</div>
+<!-- Current month days -->
+<div class="py-1">1</div><div class="py-1">2</div><div class="py-1">3</div><div class="py-1">4</div><div class="py-1">5</div><div class="py-1">6</div><div class="py-1">7</div><div class="py-1">8</div><div class="py-1">9</div>
+<div class="py-1">10</div>
+<div class="py-1 relative"><div class="absolute inset-x-0 bottom-1 mx-auto size-1 bg-blue-400 rounded-full"></div>11</div>
+<div class="py-1 bg-primary/20 text-primary font-bold rounded-lg relative"><div class="absolute inset-x-0 bottom-1 mx-auto size-1 bg-primary rounded-full"></div>12</div>
+<div class="py-1 relative"><div class="absolute inset-x-0 bottom-1 mx-auto size-1 bg-green-400 rounded-full"></div>13</div>
+<div class="py-1">14</div>
+<div class="py-1 bg-primary/10 rounded-l-lg">15</div>
+<div class="py-1 bg-primary/10">16</div>
+<div class="py-1 bg-primary/10 rounded-r-lg">17</div>
+<div class="py-1">18</div><div class="py-1">19</div><div class="py-1">20</div><div class="py-1">21</div><div class="py-1">22</div><div class="py-1">23</div>
+<div class="py-1">24</div><div class="py-1">25</div><div class="py-1">26</div><div class="py-1">27</div><div class="py-1">28</div><div class="py-1">29</div><div class="py-1">30</div><div class="py-1">31</div>
+</div>
+</div>
+</div>
+<!-- Employee Leave Balances -->
+<div>
+<h2 class="text-gray-900 dark:text-white text-xl font-bold leading-tight tracking-tight mb-4">Employee Leave Balances</h2>
+<div class="p-2 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+<ul class="divide-y divide-gray-200 dark:divide-gray-700">
+<li class="p-3 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Liam Johnson profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDP45J4kpgCcAjh_Y3mkqpzxE52D4S79-m4COiKA-Slmdpkx3irGOukxX_7hNOmT3E8CieXXVUUt39n0PyyBLGASUzp1i-smKeS0JXEsCctAoGjo3NyhI8gexUzk72rCT5XuzIT1B3vTQz5NxpxGE7aOJfKNFeMlK3R7sDqxuVzfuUejL0kcHYuMcShV-DwmZ5CjelBq8AXfEJqo95eHb23tQ6OQHz9P_bM6srdGDKw_UQTMRaKhG68nC0Bs54lwfvGx6991xK-P_M");'></div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Liam Johnson</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Annual: <span class="font-semibold text-gray-800 dark:text-gray-200">12</span>, Sick: <span class="font-semibold text-gray-800 dark:text-gray-200">5</span></p>
+</li>
+<li class="p-3 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Noah Taylor profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAM5bKLqy37KWGJcUhcgQi4Ni3QagmFpcezo9lH1A_a-FQ74p6EQYBvX2ATcgj0xO6BQpLoI6Gh0XGbRhxkZCsuTOOjQy6ogrt-eFfbsDxbs_s7xLJSctlx-9e2JKIsqcgtuwBPTvazwAv__LXMHEFeE7ciK6EMAz87rvAksj0uVtD2kzXuvdwHA9HoR-HDq6CTF2vh9Kqe4R0QunSTfsvVGEoU9vOg8cpBq8qVncH2j3i4Jn3Q0z1qDlK-MhBfoLKo482bXOXRnzY");'></div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Noah Taylor</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Annual: <span class="font-semibold text-gray-800 dark:text-gray-200">8</span>, Sick: <span class="font-semibold text-gray-800 dark:text-gray-200">2</span></p>
+</li>
+<li class="p-3 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Sophia Davis profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYU2-NYlop7evv64hgtnDTFlSh57NX756J4FakJfNeL7WHjVlLLnPcm0qpfEnVOuSZMm_kCxY3AZlNDVk8WLDbTp_NKlDub4h9iHGrz649Fz7DQEtwq_LUxj_Z4-ZkVXbhx7kAUU0Rw9NcHjHZPvndiJChdGwm9omAwYUMj8o77w0OlI5fZTq7Y_ER0Kp7zEagUt0Ir3shroSKTHzok8iwWMpnGFZEV36T_ry82611jlQS84lzyz4uvAsivc5UEozte-7lXMlIHik");'></div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Sophia Davis</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Annual: <span class="font-semibold text-gray-800 dark:text-gray-200">15</span>, Sick: <span class="font-semibold text-gray-800 dark:text-gray-200">8</span></p>
+</li>
+<li class="p-3 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Emma Martinez profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDjmqKBEG0kjaglTF-cOcc1nx02h_OzwYSi7bIE-RS_5_RXSNEVyk0qPEpeflNf0dYwgOGgkj0_v6Kq3nLZxcUVvRA3kO4ulYOkLiwrEXk-hbDN_bnI3f3o2M_pdKInJ2uM-6-QXhVD0lklyRcxKGhr3_z_6bTxDCIlsaEnfjZcJTEbnfKgnf9TSdYJqXQxsqyQw5hOXJtZgl_8hk308j77JLgevyce4jL8t_m900T-9UtNos432KD6S1dI8NxkpvHtXZx93LDSyNA");'></div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Emma Martinez</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Annual: <span class="font-semibold text-gray-800 dark:text-gray-200">10</span>, Sick: <span class="font-semibold text-gray-800 dark:text-gray-200">4</span></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

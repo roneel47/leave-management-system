@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employee Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: "#4361EE",
+              light: "#5E77F3",
+            },
+            "background-light": "#f6f6f8",
+            "background-dark": "#0B1120",
+            "surface-dark": "#131B2E",
+            "border-dark": "#253049",
+            "text-light": "#E0E6F7",
+            "text-muted": "#818DA9",
+            "accent-blue": "#3A86FF",
+            "accent-green": "#34D399",
+            "accent-yellow": "#FBBF24",
+            "accent-red": "#F87171",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-approved {
+      background-color: rgba(52, 211, 153, 0.1);
+      color: #34D399;
+    }
+    .status-pending {
+      background-color: rgba(251, 191, 36, 0.1);
+      color: #FBBF24;
+    }
+    .status-rejected {
+      background-color: rgba(248, 113, 113, 0.1);
+      color: #F87171;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+    }
+    .dot-approved {
+      background-color: #34D399;
+    }
+    .dot-pending {
+      background-color: #FBBF24;
+    }
+    .dot-rejected {
+      background-color: #F87171;
+    }
+    body {
+      background-color: #0B1120;
+    }
+    .form-checkbox:checked,
+    .form-radio:checked {
+      background-color: #4361EE;
+      border-color: #4361EE;
+    }
+    tr,
+    .stat-card,
+    button,
+    a {
+      transition: all 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-dark text-text-light">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<aside class="fixed top-0 left-0 h-full w-64 bg-surface-dark border-r border-border-dark flex flex-col p-6">
+<div class="flex items-center gap-4 mb-8">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 20.2188C2 20.2188 7.04812 17.2372 12 19.7844C17.5332 22.6314 22 20.1039 22 20.1039V4.50566C22 4.50566 17.534 6.82885 12.0016 3.98406C7.04856 1.43787 2 4.63546 2 4.63546V20.2188Z"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Leave Management</h2>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-primary bg-background-dark" href="#"><span class="material-symbols-outlined">dashboard</span><span class="text-sm font-medium">Dashboard</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">calendar_month</span><span class="text-sm font-medium">My Requests</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">groups</span><span class="text-sm font-medium">Team Calendar</span></a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white" href="#"><span class="material-symbols-outlined">person</span><span class="text-sm font-medium">Profile</span></a>
+</nav>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-4 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWCnK5G3KD2jNQhAlfTrerH6EbSscMJiAxfcmrLihaXVeIHKOPj3G97gHCl7p1Y1MZxBelheNLlFyHHUmGPykeFP48ZbN0LoTwTg6bOBv2Kc4kJOLsc5nkSsSlC6PPm6mQ2bbiSJHSS14pD3Em-XHiqqtzWhvD01wvOJxSTrRvw3TpoFjsareGCk4I8VKaEqv9OWTAiKpzxw_8bRfINY2qup8xbJ5LJYBw-WJWoxK47F-WvB7ejaOmHgcdRzo7bAuPsyBVDiBcz6Y");'></div>
+<div>
+<p class="text-white text-sm font-medium">John Doe</p>
+<p class="text-text-muted text-xs">john.doe@company.com</p>
+</div>
+</div>
+<button class="flex items-center gap-3 px-4 py-2 rounded-lg text-text-muted hover:bg-border-dark hover:text-white"><span class="material-symbols-outlined">logout</span><span class="text-sm font-medium">Log Out</span></button>
+</div>
+</aside>
+<main class="layout-container flex h-full grow flex-col p-6 lg:p-10 ml-64">
+<div class="flex flex-col gap-6">
+<div class="flex flex-wrap justify-between gap-4 items-center">
+<div class="flex flex-col gap-1">
+<p class="text-white text-3xl font-black leading-tight tracking-[-0.033em]">Welcome back, John!</p>
+<p class="text-text-muted text-base font-normal leading-normal">Here's an overview of your leave status and requests.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] gap-2 hover:bg-primary-light transform hover:scale-105"><span class="material-symbols-outlined text-base">add</span><span class="truncate">Apply for Leave</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="stat-card flex flex-1 flex-col gap-2 rounded-xl p-6 border border-border-dark bg-surface-dark hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20">
+<p class="text-text-muted text-sm font-medium leading-normal">Vacation Leave</p>
+<p class="text-white tracking-light text-2xl font-bold leading-tight">10 / 20 Days</p>
+<div class="w-full bg-border-dark rounded-full h-2">
+<div class="bg-accent-blue h-2 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<div class="stat-card flex flex-1 flex-col gap-2 rounded-xl p-6 border border-border-dark bg-surface-dark hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20">
+<p class="text-text-muted text-sm font-medium leading-normal">Sick Leave</p>
+<p class="text-white tracking-light text-2xl font-bold leading-tight">8 / 10 Days</p>
+<div class="w-full bg-border-dark rounded-full h-2">
+<div class="bg-accent-yellow h-2 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<div class="stat-card flex flex-1 flex-col gap-2 rounded-xl p-6 border border-border-dark bg-surface-dark hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20">
+<p class="text-text-muted text-sm font-medium leading-normal">Casual Leave</p>
+<p class="text-white tracking-light text-2xl font-bold leading-tight">3 / 5 Days</p>
+<div class="w-full bg-border-dark rounded-full h-2">
+<div class="bg-accent-green h-2 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="flex flex-col gap-4 p-6 rounded-xl border border-border-dark bg-surface-dark">
+<div class="flex justify-between items-center">
+<h3 class="text-white text-lg font-bold">Recent Leave Requests</h3>
+<a class="text-primary text-sm font-medium hover:text-primary-light" href="#">View All</a>
+</div>
+<div class="flex overflow-hidden rounded-xl border border-border-dark bg-surface-dark">
+<table class="w-full">
+<thead>
+<tr class="border-b border-border-dark bg-surface-dark/50">
+<th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Date</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Type</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Days</th>
+<th class="px-4 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<tr class="hover:bg-background-dark">
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">Nov 15 - Nov 17, 2023</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-white">Vacation</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">3</td>
+<td class="px-4 py-3 whitespace-nowrap"><span class="status-badge status-approved">
+<div class="dot dot-approved"></div>Approved
+</span></td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">Oct 20, 2023</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-white">Sick Leave</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">1</td>
+<td class="px-4 py-3 whitespace-nowrap"><span class="status-badge status-approved">
+<div class="dot dot-approved"></div>Approved
+</span></td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">Dec 22 - Dec 26, 2023</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-white">Vacation</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">3</td>
+<td class="px-4 py-3 whitespace-nowrap"><span class="status-badge status-pending">
+<div class="dot dot-pending"></div>Pending
+</span></td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">Sep 05, 2023</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-white">Casual Leave</td>
+<td class="px-4 py-3 whitespace-nowrap text-sm text-text-muted">1</td>
+<td class="px-4 py-3 whitespace-nowrap"><span class="status-badge status-rejected">
+<div class="dot dot-rejected"></div>Rejected
+</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-6 rounded-xl border border-border-dark bg-surface-dark">
+<h3 class="text-white text-lg font-bold mb-4">Upcoming Time Off</h3>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4 p-4 rounded-lg bg-background-dark hover:bg-border-dark">
+<div class="size-10 bg-accent-blue/20 text-accent-blue rounded-full flex items-center justify-center"><span class="material-symbols-outlined">flight</span></div>
+<div>
+<p class="text-white font-medium">Thanksgiving Break</p>
+<p class="text-text-muted text-sm">Nov 23 - Nov 24, 2024</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-lg bg-background-dark hover:bg-border-dark">
+<div class="size-10 bg-accent-green/20 text-accent-green rounded-full flex items-center justify-center"><span class="material-symbols-outlined">park</span></div>
+<div>
+<p class="text-white font-medium">Christmas Holiday</p>
+<p class="text-text-muted text-sm">Dec 25, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-lg bg-background-dark hover:bg-border-dark">
+<div class="size-10 bg-accent-red/20 text-accent-red rounded-full flex items-center justify-center"><span class="material-symbols-outlined">cake</span></div>
+<div>
+<p class="text-white font-medium">New Year's Day</p>
+<p class="text-text-muted text-sm">Jan 01, 2024</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B1120" />
+    <meta
+      name="description"
+      content="Leave Management System"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#4361EE",
+                light: "#5E77F3",
+              },
+              "background-light": "#f6f6f8",
+              "background-dark": "#0B1120",
+              "surface-dark": "#131B2E",
+              "border-dark": "#253049",
+              "text-light": "#E0E6F7",
+              "text-muted": "#818DA9",
+              "accent-blue": "#3A86FF",
+              "accent-green": "#34D399",
+              "accent-yellow": "#FBBF24",
+              "accent-red": "#F87171",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "0.75rem",
+              "xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 20px;
+      }
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      .status-approved {
+        background-color: rgba(52, 211, 153, 0.1);
+        color: #34D399;
+      }
+      .status-pending {
+        background-color: rgba(251, 191, 36, 0.1);
+        color: #FBBF24;
+      }
+      .status-rejected {
+        background-color: rgba(248, 113, 113, 0.1);
+        color: #F87171;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 9999px;
+      }
+      .dot-approved {
+        background-color: #34D399;
+      }
+      .dot-pending {
+        background-color: #FBBF24;
+      }
+      .dot-rejected {
+        background-color: #F87171;
+      }
+      body {
+        background-color: #0B1120;
+      }
+      .form-checkbox:checked,
+      .form-radio:checked {
+        background-color: #4361EE;
+        border-color: #4361EE;
+      }
+      tr,
+      .stat-card,
+      button,
+      a {
+        transition: all 0.2s ease-in-out;
+      }
+    </style>
+    
+    <title>Leave Management System</title>
+  </head>
+  <body class="font-display bg-background-dark text-text-light">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>All Employee Leave History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem; /* 12px */
+            font-weight: 500;
+        }
+        .status-approved {
+            background-color: #e9f9ee;
+            color: #28a745;
+        }
+        .dark .status-approved {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+        .status-pending {
+            background-color: #fff8e6;
+            color: #ffc107;
+        }
+        .dark .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        .status-rejected {
+            background-color: #fdeaea;
+            color: #dc3545;
+        }
+        .dark .status-rejected {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+        }
+        .dot-approved { background-color: #28a745; }
+        .dot-pending { background-color: #ffc107; }
+        .dot-rejected { background-color: #dc3545; }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#111318] dark:text-gray-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#f0f2f4] dark:border-gray-700 px-10 py-3 bg-white dark:bg-[#182131]">
+<div class="flex items-center gap-4 text-[#111318] dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 20.2188C2 20.2188 7.04812 17.2372 12 19.7844C17.5332 22.6314 22 20.1039 22 20.1039V4.50566C22 4.50566 17.534 6.82885 12.0016 3.98406C7.04856 1.43787 2 4.63546 2 4.63546V20.2188Z"></path>
+</svg>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Leave Management</h2>
+</div>
+<div class="flex flex-1 justify-center gap-8">
+<div class="flex items-center gap-9">
+<a class="text-[#616f89] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-white" href="#">Dashboard</a>
+<a class="text-[#616f89] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-white" href="#">My Leave</a>
+<a class="text-[#616f89] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-white" href="#">Team Leave</a>
+<a class="text-primary dark:text-white text-sm font-bold leading-normal border-b-2 border-primary pb-1" href="#">All Leave History</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Request Leave</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f0f2f4] dark:bg-background-dark text-[#111318] dark:text-gray-300 dark:hover:bg-gray-700/60 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f0f2f4] dark:bg-background-dark text-[#111318] dark:text-gray-300 dark:hover:bg-gray-700/60 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLa3Tzklpx3a207lyn4LY_1NKRjt5oOeMa-nod8hwCNC08ZjmOsjlDWADjI7F9SMUECaKW42EHdEBgBEoYtwYfjJvQ5j5A8AcxuxPKdGfp81xVe8avVFhrCyIIv9lYuCOKUfehRm9cRtkORouPXd5gnL4I9vNsTqafoiMOvLNxyQkfdEe2CUMk702Rr6H9S_Hnkcu-puZHnlYHpmv3ol3zp3yFLnQYhwSc18e77xmnMuBTfIVxEZj7SZkaMI5A1AeJhHh-Is01vp4");'></div>
+</div>
+</header>
+<main class="layout-container flex h-full grow flex-col p-6 lg:p-10">
+<div class="flex flex-col gap-6">
+<div class="flex flex-wrap justify-between gap-4 items-center">
+<div class="flex flex-col gap-2">
+<p class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">All Employee Leave History</p>
+<p class="text-[#616f89] dark:text-gray-400 text-base font-normal leading-normal">View and manage leave requests for all employees.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white dark:bg-background-dark text-[#111318] dark:text-gray-300 border border-[#dbdfe6] dark:border-gray-700 text-sm font-medium leading-normal tracking-[0.015em] gap-2 hover:bg-gray-50 dark:hover:bg-gray-700/60">
+<span class="material-symbols-outlined text-base">ios_share</span>
+<span class="truncate">Export Data</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-[#dbdfe6] dark:border-gray-700 bg-white dark:bg-background-dark">
+<p class="text-[#616f89] dark:text-gray-400 text-sm font-medium leading-normal">Pending Requests</p>
+<p class="text-[#111318] dark:text-white tracking-light text-3xl font-bold leading-tight">12</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-[#dbdfe6] dark:border-gray-700 bg-white dark:bg-background-dark">
+<p class="text-[#616f89] dark:text-gray-400 text-sm font-medium leading-normal">Approved This Month</p>
+<p class="text-[#111318] dark:text-white tracking-light text-3xl font-bold leading-tight">34</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-[#dbdfe6] dark:border-gray-700 bg-white dark:bg-background-dark">
+<p class="text-[#616f89] dark:text-gray-400 text-sm font-medium leading-normal">Total Employees on Leave</p>
+<p class="text-[#111318] dark:text-white tracking-light text-3xl font-bold leading-tight">8</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<aside class="lg:col-span-1">
+<div class="p-6 rounded-xl border border-[#dbdfe6] dark:border-gray-700 bg-white dark:bg-background-dark sticky top-6">
+<h3 class="text-lg font-bold text-[#111318] dark:text-white mb-6">Filters</h3>
+<div class="flex flex-col gap-6">
+<div>
+<label class="block text-sm font-medium text-[#616f89] dark:text-gray-400 mb-2" for="date-range">Date Range</label>
+<input class="form-input w-full rounded-lg border-[#dbdfe6] dark:border-gray-600 bg-transparent dark:text-gray-300 focus:ring-primary focus:border-primary" id="date-range" type="date"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-[#616f89] dark:text-gray-400 mb-2" for="leave-status">Leave Status</label>
+<select class="form-select w-full rounded-lg border-[#dbdfe6] dark:border-gray-600 bg-transparent dark:text-gray-300 focus:ring-primary focus:border-primary dark:bg-background-dark" id="leave-status">
+<option>All</option>
+<option>Approved</option>
+<option>Pending</option>
+<option>Rejected</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-[#616f89] dark:text-gray-400 mb-2" for="leave-type">Leave Type</label>
+<select class="form-select w-full rounded-lg border-[#dbdfe6] dark:border-gray-600 bg-transparent dark:text-gray-300 focus:ring-primary focus:border-primary dark:bg-background-dark" id="leave-type">
+<option>All</option>
+<option>Annual</option>
+<option>Sick Leave</option>
+<option>Unpaid</option>
+<option>Maternity</option>
+</select>
+</div>
+<div>
+<p class="block text-sm font-medium text-[#616f89] dark:text-gray-400 mb-2">Department</p>
+<div class="space-y-2">
+<label class="flex items-center gap-2"><input checked="" class="form-checkbox rounded text-primary focus:ring-primary/50" type="checkbox"/> <span class="text-sm">Engineering</span></label>
+<label class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" type="checkbox"/> <span class="text-sm">Product</span></label>
+<label class="flex items-center gap-2"><input class="form-checkbox rounded text-primary focus:ring-primary/50" type="checkbox"/> <span class="text-sm">Design</span></label>
+<label class="flex items-center gap-2"><input checked="" class="form-checkbox rounded text-primary focus:ring-primary/50" type="checkbox"/> <span class="text-sm">Marketing</span></label>
+</div>
+</div>
+<div class="flex gap-3 mt-4">
+<button class="flex flex-1 items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-medium">Apply</button>
+<button class="flex flex-1 items-center justify-center rounded-lg h-10 px-4 bg-[#f0f2f4] dark:bg-gray-700 text-[#111318] dark:text-gray-300 text-sm font-medium">Reset</button>
+</div>
+</div>
+</div>
+</aside>
+<div class="lg:col-span-3 flex flex-col gap-4">
+<div class="py-3">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#616f89] dark:text-gray-400 flex border-none bg-white dark:bg-background-dark border dark:border-gray-700 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-2xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111318] dark:text-gray-200 focus:outline-0 focus:ring-primary border-[#dbdfe6] dark:border-gray-700 focus:border-primary bg-white dark:bg-background-dark h-full placeholder:text-[#616f89] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search by employee name or ID..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex overflow-hidden rounded-xl border border-[#dbdfe6] dark:border-gray-700 bg-white dark:bg-background-dark">
+<table class="w-full">
+<thead class="border-b border-[#dbdfe6] dark:border-gray-700">
+<tr class="bg-white dark:bg-background-dark">
+<th class="px-6 py-4 text-left text-xs font-medium text-[#616f89] dark:text-gray-400 uppercase tracking-wider">Employee</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-[#616f89] dark:text-gray-400 uppercase tracking-wider">Leave Type</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-[#616f89] dark:text-gray-400 uppercase tracking-wider">Dates</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-[#616f89] dark:text-gray-400 uppercase tracking-wider">Duration</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-[#616f89] dark:text-gray-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-right text-xs font-medium text-[#616f89] dark:text-gray-400 uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dbdfe6] dark:divide-gray-700">
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar of Olivia Rhye" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOGclYppLdFmkrsEcmdUfLOmiozeSXZIILktt3nZSYemKU0l0YlBgSEgX3FP664-QAzlF6wF5L0Ky4hJ0Us3O4yDjRLXaQbxHC3lnDDHsX7aGKq-Wt5wrqaFVrJyMai7YjLu8nxISG35LuxxxzxjBjj-Qh_VVVMGXdrmCg6U2heBbnOwh99YsDNo7Tx5eqlU-YWyuF0O1QcKxylomaamuiemqONICmybaoufsMIVc4KaE-7hm9px6N7IQ7ZtlNSrS3PX1uP1oQi-g");'></div>
+<span class="text-sm font-medium text-[#111318] dark:text-white">Olivia Rhye</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Annual Leave</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Aug 15 - Aug 20, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">5 days</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-approved"><div class="dot dot-approved"></div>Approved</span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-[#616f89] dark:text-gray-400">more_horiz</span></button></td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar of Phoenix Baker" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1OkkfuLpxV7feP2OnnI53dqD6uof_IdkXya5LA4V1H0vDbgYyVin9vSTFdc2dNlWr40hIXhtXjtzTVPWuuFwGAY2pDjVaHs4r8DHf-oA9yKd2xuWqmNWXnodYOCHyxcYXoiNawOdqybb3D3bx-dw933c9XrcWGvi-0uCyrW2nXwUA08K0Kqf6SjX-z4fWErV9Bf7JFDXjAlbJt3riebBmkrbFGd9ewe_euHcUIvogvD8mzzuwI8g-_GXTzNmto8HtF7Ua02nOyiY");'></div>
+<span class="text-sm font-medium text-[#111318] dark:text-white">Phoenix Baker</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Sick Leave</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Aug 12, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">1 day</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-approved"><div class="dot dot-approved"></div>Approved</span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-[#616f89] dark:text-gray-400">more_horiz</span></button></td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar of Lana Steiner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjp5Dpt9IQ0T3yLqBII3PvI9gJoqTEnRDVkr6N_Ueox49OrK-h4seTYKqulVPXTZMBg2MCyA-XjTyrFb2bobKtlpBbFvK4nZPuDOjPTap5CmfFR_KIt9bVMGM3lwGarPHcMCipzZLbS9BDe8al7dmjP3rha3qi2DtWvYB9YSU6yhhjXANOxKGBYZsPogLnxJQMyVGfL9NilguWLczk_nxRe8R5IfMGD5j-NOLiNaY6NadSXFVnmloaw9-ZA9CmPvLaqjCDMcGflEg");'></div>
+<span class="text-sm font-medium text-[#111318] dark:text-white">Lana Steiner</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Annual Leave</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Sep 01 - Sep 05, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">4 days</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-pending"><div class="dot dot-pending"></div>Pending</span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-[#616f89] dark:text-gray-400">more_horiz</span></button></td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar of Demi Wilkinson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCm_uj6wPolb_aulzacqR9PcmK1JdG_aEdMbWLuZsz1jSdFa_ydOVfKGHyI1k-4hkxb-9j7d9l_F0AZvHk-CyWCkkJXL_qPCtCqqd668p_AztoL0ewLEWKh18SwRhZ_jggR8dRtl5r4LBj3jLIPdAKiu28jtwp2NCeZgF5kDaU6VIsE0tmTGVbAhwnZUNOeuv4BKHHdj1QNVFVgZAlTiGLxXs5qCDvcoCiHhzXqb0dfiFQks5R1MgVAnZHwGGOT4_CUq7fiKPvh3fg");'></div>
+<span class="text-sm font-medium text-[#111318] dark:text-white">Demi Wilkinson</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Unpaid Leave</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Jul 20 - Jul 22, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">2 days</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-rejected"><div class="dot dot-rejected"></div>Rejected</span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-[#616f89] dark:text-gray-400">more_horiz</span></button></td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar of Candice Wu" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVCZ1AKn84yYy1hrW4CQLgHQN_knsiR2SH1ZZB4zFbpBm2J7XIfk4V56zxRy0566Aal1LQkUmpGX5eDgWQhSo1ZccmzMiDhC_eAHnJu8Mf33M8zAdE5drn7yKsFx1RsxJgHksFulCp45DjDF_d6CSE6cp2tXpN4gJVVVIomylI3HaiRLYQeXDNQW1yxezyG4skl8rTQDD3aWc8HDJ53T22odUm_x5HiJp3nxjnBZh09nCE9S4dmWgSE5BDONYnIBybXXaZU_BVHkc");'></div>
+<span class="text-sm font-medium text-[#111318] dark:text-white">Candice Wu</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Annual Leave</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">Oct 10 - Oct 18, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#616f89] dark:text-gray-400">7 days</td>
+<td class="px-6 py-4 whitespace-nowrap"><span class="status-badge status-pending"><div class="dot dot-pending"></div>Pending</span></td>
+<td class="px-6 py-4 whitespace-nowrap text-right"><button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"><span class="material-symbols-outlined text-[#616f89] dark:text-gray-400">more_horiz</span></button></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between py-3">
+<span class="text-sm text-[#616f89] dark:text-gray-400">Showing 1 to 5 of 42 results</span>
+<div class="inline-flex gap-1">
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-[#dbdfe6] dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-primary text-sm font-medium bg-primary/20 text-primary">1</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-[#dbdfe6] dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700">2</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-[#dbdfe6] dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700">3</button>
+<span class="inline-flex items-center justify-center h-8 w-8">...</span>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-[#dbdfe6] dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700">9</button>
+<button class="inline-flex items-center justify-center h-8 w-8 rounded-md border border-[#dbdfe6] dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
