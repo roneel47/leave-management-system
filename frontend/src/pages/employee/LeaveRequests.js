@@ -11,20 +11,33 @@ const LeaveRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/leave-requests`);
+      const mine = res.data.filter(r => r.userId?._id === user?._id);
+      setRequests(mine);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/api/leave-requests`);
-        const mine = res.data.filter(r => r.userId?._id === user?._id);
-        setRequests(mine);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
   }, [user?._id]);
+
+  const handleCancel = async (id) => {
+    if (!window.confirm('Are you sure you want to cancel this leave request?')) {
+      return;
+    }
+    try {
+      await axios.delete(`${API_URL}/api/leave-requests/${id}`);
+      fetchData(); // Refresh the list
+    } catch (e) {
+      alert(e.response?.data?.error || 'Failed to cancel request');
+    }
+  };
 
   const getStatusBadge = (status) => {
     const map = {
@@ -59,6 +72,7 @@ const LeaveRequests = () => {
                     <th className="p-4 text-sm font-semibold text-gray-600 dark:text-gray-400">Type</th>
                     <th className="p-4 text-sm font-semibold text-gray-600 dark:text-gray-400">Days</th>
                     <th className="p-4 text-sm font-semibold text-gray-600 dark:text-gray-400">Status</th>
+                    <th className="p-4 text-sm font-semibold text-gray-600 dark:text-gray-400">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
@@ -73,6 +87,16 @@ const LeaveRequests = () => {
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadge(req.status)}`}>
                           {req.status}
                         </span>
+                      </td>
+                      <td className="p-4">
+                        {req.status === 'pending' && (
+                          <button
+                            onClick={() => handleCancel(req._id)}
+                            className="px-3 py-1 bg-red-600 text-white rounded text-xs font-medium hover:bg-red-700"
+                          >
+                            Cancel
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}

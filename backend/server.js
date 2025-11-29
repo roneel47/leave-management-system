@@ -92,7 +92,7 @@ app.get('/api/users/:id', async (req, res) => {
 });
 
 // Leave Requests For Employees
-app.post('/api/leave', async (req, res) => {
+app.post('/api/leave-requests', async (req, res) => {
 	try {
 		const lr = await LeaveRequest.create(req.body);
 		res.status(201).json(lr);
@@ -100,7 +100,13 @@ app.post('/api/leave', async (req, res) => {
 		res.status(400).json({ error: e.message });
 	}
 });
+
 // Get all leave requests with user info
+app.get('/api/leave-requests', async (req, res) => {
+	const items = await LeaveRequest.find().populate('userId', 'name email').lean();
+	res.json(items);
+});
+
 app.get('/api/leave/my-requests', async (req, res) => {
 	const items = await LeaveRequest.find().populate('userId', 'name email').lean();
 	res.json(items);
@@ -110,6 +116,23 @@ app.get('/api/leave/my-requests', async (req, res) => {
 app.get('/api/leave/balances', async (req, res) => {
     const users = await User.find({}, 'name email leaveBalance').lean();
     res.json(users);
+});
+
+// Cancel pending leave request
+app.delete('/api/leave-requests/:id', async (req, res) => {
+    try {
+        const lr = await LeaveRequest.findById(req.params.id);
+        if (!lr) {
+            return res.status(404).json({ error: 'Leave request not found' });
+        }
+        if (lr.status !== 'pending') {
+            return res.status(400).json({ error: 'Can only cancel pending requests' });
+        }
+        await LeaveRequest.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Leave request cancelled' });
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
 });
 
 app.delete('/api/leave/:id', async (req, res) => {
@@ -136,6 +159,56 @@ app.get('/api/leave/pending', async (req, res) => {
 	res.json(items);
 });
 
+// Update leave request status (approve/reject)
+app.patch('/api/leave-requests/:id/status', async (req, res) => {
+	try {
+		const { status, managerComment } = req.body;
+		const lr = await LeaveRequest.findById(req.params.id);
+		
+		if (!lr) {
+			return res.status(404).json({ error: 'Leave request not found' });
+		}
+
+		if (lr.status !== 'pending') {
+			return res.status(400).json({ error: 'Leave request already processed' });
+		}
+
+		// If approving, deduct from leave balance
+		if (status === 'approved') {
+			const user = await User.findById(lr.userId);
+			if (!user) {
+				return res.status(404).json({ error: 'User not found' });
+			}
+
+			const days = lr.totalDays || 0;
+			const leaveType = lr.leaveType;
+			
+			// Deduct from appropriate leave type
+			if (leaveType === 'sick' && user.leaveBalance.sickLeave) {
+				user.leaveBalance.sickLeave = Math.max(0, user.leaveBalance.sickLeave - days);
+			} else if (leaveType === 'casual' && user.leaveBalance.casualLeave) {
+				user.leaveBalance.casualLeave = Math.max(0, user.leaveBalance.casualLeave - days);
+			} else if (leaveType === 'vacation' && user.leaveBalance.vacation) {
+				user.leaveBalance.vacation = Math.max(0, user.leaveBalance.vacation - days);
+			}
+			
+			await user.save();
+		}
+
+		lr.status = status;
+		if (managerComment) {
+			lr.managerComment = managerComment;
+		}
+		await lr.save();
+
+		const populated = await LeaveRequest.findById(lr._id).populate('userId', 'name email').lean();
+		res.json({ message: `Leave request ${status}`, leaveRequest: populated });
+	} catch (e) {
+		res.status(400).json({ error: e.message });
+	}
+});
+
+// Legacy approve endpoint
 app.put('/api/leave/:id/approve', async (req, res) => {
 	try {
 		const lr = await LeaveRequest.findById(req.params.id);
@@ -147,23 +220,28 @@ app.put('/api/leave/:id/approve', async (req, res) => {
 			return res.status(400).json({ error: 'Leave request already approved' });
 		}
 
-		// Adjust user's leave balance if applicable
 		const user = await User.findById(lr.userId);
 		if (!user) {
 			return res.status(404).json({ error: 'User not found' });
 		}
 
-		const days = lr.numberOfDays || 0;
-		if (typeof user.leaveBalance === 'number') {
-			user.leaveBalance = Math.max(0, user.leaveBalance - days);
-			await user.save();
+		const days = lr.totalDays || 0;
+		const leaveType = lr.leaveType;
+		
+		if (leaveType === 'sick' && user.leaveBalance.sickLeave) {
+			user.leaveBalance.sickLeave = Math.max(0, user.leaveBalance.sickLeave - days);
+		} else if (leaveType === 'casual' && user.leaveBalance.casualLeave) {
+			user.leaveBalance.casualLeave = Math.max(0, user.leaveBalance.casualLeave - days);
+		} else if (leaveType === 'vacation' && user.leaveBalance.vacation) {
+			user.leaveBalance.vacation = Math.max(0, user.leaveBalance.vacation - days);
 		}
+		
+		await user.save();
 
 		lr.status = 'approved';
 		await lr.save();
 
 		const populated = await LeaveRequest.findById(lr._id).populate('userId', 'name email').lean();
-
 		res.json({ message: 'Leave request approved', leaveRequest: populated });
 	} catch (e) {
 		res.status(400).json({ error: e.message });
