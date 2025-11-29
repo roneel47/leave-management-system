@@ -9,7 +9,6 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 const LoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'employee' });
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -124,7 +123,7 @@ const LoginRegister = () => {
                 <span className="text-text-muted text-sm font-medium leading-normal mb-2">Password</span>
                 <div className="flex w-full flex-1 items-stretch rounded-lg h-10">
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type="password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
@@ -133,6 +132,12 @@ const LoginRegister = () => {
                   />
                 </div>
               </label>
+
+              {isLogin && (
+                <a className="text-primary text-sm font-medium text-right hover:text-primary-light cursor-pointer">
+                  Forgot Password?
+                </a>
+              )}
 
               {!isLogin && (
                 <label className="flex flex-col min-w-40 w-full">
@@ -150,16 +155,6 @@ const LoginRegister = () => {
                 </label>
               )}
 
-              {isLogin && (
-                <button
-                  type="button"
-                  className="text-primary text-sm font-medium text-right hover:text-primary-light"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Forgot Password?
-                </button>
-              )}
-
               <button
                 type="submit"
                 disabled={loading}
@@ -168,7 +163,18 @@ const LoginRegister = () => {
                 {loading ? 'Please wait...' : isLogin ? 'Login' : 'Register'}
               </button>
 
-              {!isLogin && (
+              {isLogin ? (
+                <p className="text-text-muted text-sm text-center mt-4">
+                  Don't have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => setIsLogin(false)}
+                    className="text-primary hover:text-primary-light"
+                  >
+                    Register here
+                  </button>
+                </p>
+              ) : (
                 <p className="text-text-muted text-sm text-center mt-4">
                   Already have an account?{' '}
                   <button
