@@ -11,7 +11,10 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, index: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['employee', 'manager'], default: 'employee' },
-  leaveBalance: { type: LeaveBalanceSchema, default: () => ({}) },
+  leaveBalance: { 
+    type: LeaveBalanceSchema, 
+    default: () => ({ sick: 10, casual: 5, vacation: 5 }) 
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);
