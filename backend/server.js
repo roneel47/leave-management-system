@@ -80,9 +80,16 @@ app.post('/api/users', async (req, res) => {
 	}
 });
 
+// Get all users (optionally filter by role)
 app.get('/api/users', async (req, res) => {
-	const users = await User.find().lean();
-	res.json(users);
+	try {
+		const { role } = req.query;
+		const filter = role ? { role } : {};
+		const users = await User.find(filter).select('-password').lean();
+		res.json(users);
+	} catch (e) {
+		res.status(400).json({ error: e.message });
+	}
 });
 
 app.get('/api/users/:id', async (req, res) => {
