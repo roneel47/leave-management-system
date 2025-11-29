@@ -62,7 +62,7 @@ app.post('/api/auth/register', async (req, res) => {
             return res.status(400).json({ error: 'Email already in use' });
         }
 
-        const user = await User.create({ name, email, password, role, leaveBalance: role === 'employee' ? 20 : 0 });
+        const user = await User.create({ name, email, password, role });
         res.status(201).json(user);
     } catch (e) {
         res.status(400).json({ error: e.message });
@@ -72,8 +72,8 @@ app.post('/api/auth/register', async (req, res) => {
 // Users
 app.post('/api/users', async (req, res) => {
 	try {
-		const { name, email, password, role, leaveBalance } = req.body;
-		const user = await User.create({ name, email, password, role, leaveBalance });
+		const { name, email, password, role } = req.body;
+		const user = await User.create({ name, email, password, role });
 		res.status(201).json(user);
 	} catch (e) {
 		res.status(400).json({ error: e.message });
@@ -184,10 +184,10 @@ app.patch('/api/leave-requests/:id/status', async (req, res) => {
 			const leaveType = lr.leaveType;
 			
 			// Deduct from appropriate leave type
-			if (leaveType === 'sick' && user.leaveBalance.sickLeave) {
-				user.leaveBalance.sickLeave = Math.max(0, user.leaveBalance.sickLeave - days);
-			} else if (leaveType === 'casual' && user.leaveBalance.casualLeave) {
-				user.leaveBalance.casualLeave = Math.max(0, user.leaveBalance.casualLeave - days);
+			if (leaveType === 'sick' && user.leaveBalance.sick) {
+				user.leaveBalance.sick = Math.max(0, user.leaveBalance.sick - days);
+			} else if (leaveType === 'casual' && user.leaveBalance.casual) {
+				user.leaveBalance.casual = Math.max(0, user.leaveBalance.casual - days);
 			} else if (leaveType === 'vacation' && user.leaveBalance.vacation) {
 				user.leaveBalance.vacation = Math.max(0, user.leaveBalance.vacation - days);
 			}
@@ -228,10 +228,10 @@ app.put('/api/leave/:id/approve', async (req, res) => {
 		const days = lr.totalDays || 0;
 		const leaveType = lr.leaveType;
 		
-		if (leaveType === 'sick' && user.leaveBalance.sickLeave) {
-			user.leaveBalance.sickLeave = Math.max(0, user.leaveBalance.sickLeave - days);
-		} else if (leaveType === 'casual' && user.leaveBalance.casualLeave) {
-			user.leaveBalance.casualLeave = Math.max(0, user.leaveBalance.casualLeave - days);
+		if (leaveType === 'sick' && user.leaveBalance.sick) {
+			user.leaveBalance.sick = Math.max(0, user.leaveBalance.sick - days);
+		} else if (leaveType === 'casual' && user.leaveBalance.casual) {
+			user.leaveBalance.casual = Math.max(0, user.leaveBalance.casual - days);
 		} else if (leaveType === 'vacation' && user.leaveBalance.vacation) {
 			user.leaveBalance.vacation = Math.max(0, user.leaveBalance.vacation - days);
 		}

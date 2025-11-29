@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const LeaveBalanceSchema = new mongoose.Schema({
-  sickLeave: { type: Number, default: 10, min: 0 },
-  casualLeave: { type: Number, default: 5, min: 0 },
+  sick: { type: Number, default: 10, min: 0 },
+  casual: { type: Number, default: 5, min: 0 },
   vacation: { type: Number, default: 5, min: 0 },
 }, { _id: false });
 
